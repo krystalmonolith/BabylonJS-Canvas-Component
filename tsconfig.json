@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "alphapulsar-babylonjs-lib": [
+        "dist/alphapulsar-babylonjs-lib"
+      ],
+      "alphapulsar-babylonjs-lib/*": [
+        "dist/alphapulsar-babylonjs-lib/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

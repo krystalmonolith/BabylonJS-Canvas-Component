@@ -124,6 +124,41 @@
           }
         }
       }
+    },
+    "alphapulsar-babylonjs-lib": {
+      "projectType": "library",
+      "root": "projects/alphapulsar-babylonjs-lib",
+      "sourceRoot": "projects/alphapulsar-babylonjs-lib/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/alphapulsar-babylonjs-lib/tsconfig.lib.json",
+            "project": "projects/alphapulsar-babylonjs-lib/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/alphapulsar-babylonjs-lib/src/test.ts",
+            "tsConfig": "projects/alphapulsar-babylonjs-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/alphapulsar-babylonjs-lib/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/alphapulsar-babylonjs-lib/tsconfig.lib.json",
+              "projects/alphapulsar-babylonjs-lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }},
   "defaultProject": "alphapulsar-babylonjs-itest-app"
 }
