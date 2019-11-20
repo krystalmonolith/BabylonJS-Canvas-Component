@@ -1,13 +1,28 @@
-# Angular BabylonJS Canvas Component .aka. `BabylonjsCanvasComponent`
+# Angular BabylonJS Canvas Component: `BabylonjsCanvasComponent`
+
+ 
 
 ## Introduction:
-The `BabylonjsCanvasComponent` .aka. `<babylonjs-canvas>` was not designed to be used directly: 
+The `BabylonjsCanvasComponent` .aka. `<babylonjs-canvas>` is an [Angular Component](https://angular.io/api/core/Component) 
+that wraps a HTML Canvas element that is bound to the browser's [WebGL](https://www.khronos.org/webgl/wiki/Main_Page) context. 
+The resultant browser WebGL context is managed through the [BabylonJS](https://www.babylonjs.com/) 3D graphics API.
+
+This component handles the infrastructure of creating and managing the `BABYLON.Engine` and `BABYLON.Scene`, 
+BabylonJS's render loop, BabylonJS's key bindings, and BabylonJS's resizing events.    
+
+`BabylonjsCanvasComponent` was not designed to be used directly: 
 It was designed to be encapsulated in another Angular component that provides a "render function". 
 The render function is the function passed to the `BABYLON.scene.registerBeforeRender(function() {})` 
 BabylonJS registration function.
-See [BabylonJS: Complex Animation](https://doc.babylonjs.com/babylon101/animations#complex-animation)
+---
+## Disambiguation:
+*Animation*: When the term 'animation' is used here it refers to 
+[BabylonJS's Complex Animation](https://doc.babylonjs.com/babylon101/animations#complex-animation) capabilities.
+BabylonJS also has simple built in animation capability .aka. `BABYLON.AnimationEvent`... 
+These are _not_ the animations being discussed here.
 
-### General Usage: 
+---
+## BabylonjsCanvasComponent General Usage: 
 
 1.) Embed the `<babylonjs-canvas>` component selector in _your_ component's template HTML.
 
@@ -30,7 +45,7 @@ are supplied if none are specified.
 4.) Create frame-by-frame animations inside your render function using the `BABYLON.Scene` parameter passed
 to the rendering function creation callback which should capture the `BABYLON.Scene` parameter!
 
-##Cavaets:
+## Cavaets:
 
  a.) It was necessary to have the explicit initialization function BabylonjsCanvasComponent.createAnimation()
 because the embedded BabylonjsCanvasComponent is created before your encapsulating component is created causing
@@ -42,7 +57,30 @@ they ceased working. This might be overcome by using the "BabylonJS Observables"
 out of scope for my effort.
 
 ---
-##Auto-Generated Docs:
+## Angular Component Selector for `BabylonjsCanvasComponent`:
+
+`<babylonjs-canvas>`
+
+---
+## API:
+
+### `BabylonjsCanvasComponent.createAnimation(sceneFunc, cameraFunc, lightFunc, axisFunc)`
+
+```
+createAnimation(sceneFunc: (bjsCanvasComponent: BabylonjsCanvasComponent, scene: BABYLON.Scene) => () => void,
+                  cameraFunc: (canvas: HTMLCanvasElement, scene: BABYLON.Scene) => BABYLON.Camera = BabylonjsCanvasComponent.defaultFlyCamera,
+                  lightFunc: (scene: BABYLON.Scene) => BABYLON.Light = BabylonjsCanvasComponent.defaultHemisphericalLight,
+                  axisFunc: (scene: BABYLON.Scene) => void = BabylonjsCanvasComponent.defaultAxis
+  ): void
+```
+
+* *Note: Required Parameter `sceneFunc` is a reference to a function that returns the "render function", _not_ a reference to the render function itself.* 
+Why? Because the render function has the signature: `() => void` meaning that it cannot be passed parameters. `sceneFunc` can get around this
+ restriction by returning a render function that closes on the input parameter(s) to the render function instead of passing the parameters.
+* Optional Parameters `cameraFunc`, `lightFunc`, and `axisFunc` are optional as simple defaults are supplied.
+
+---
+## Auto-Generated Docs:
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.19.
 
