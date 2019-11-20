@@ -1,4 +1,48 @@
-# AlphaPulsar LLC BabylonJS Component: AlphapulsarBabylonjsComponent
+# Angular BabylonJS Canvas Component .aka. `BabylonjsCanvasComponent`
+
+## Introduction:
+The `BabylonjsCanvasComponent` .aka. `<babylonjs-canvas>` was not designed to be used directly: 
+It was designed to be encapsulated in another Angular component that provides a "render function". 
+The render function is the function passed to the `BABYLON.scene.registerBeforeRender(function() {})` 
+BabylonJS registration function.
+See [BabylonJS: Complex Animation](https://doc.babylonjs.com/babylon101/animations#complex-animation)
+
+### General Usage: 
+
+1.) Embed the `<babylonjs-canvas>` component selector in _your_ component's template HTML.
+
+2.) Use Angular's `ViewChild` to get a reference to the canvas component element and type it as `BabylonjsCanvasComponent`.
+
+*!!! IMPORTANT: Use { static: true } as the ViewChild second parameter. !!! .e.g:*
+
+```@ViewChild('explodedcubecanvas', {static: true}) private bjsCanvasComponent: BabylonjsCanvasComponent;```
+
+3.) In the `NgInit()` function of your component create the WebGL context by using the
+`BabylonjsCanvasComponent.createAnimation()` function. The `createAnimation()` function first initializes
+the `BABYLON.Engine` and `BABYLON.Scene` and then invokes a callback function _you_ supply that returns
+the actual BabylonJS render function having  aTypeScript signature: `() => void`.
+
+After _your_ function returns the render function it is registered with BabylonJS render loop.
+
+When calling `BabylonjsCanvasComponent.createAnimation()` default camera, light, and axis functions 
+are supplied if none are specified.
+
+4.) Create frame-by-frame animations inside your render function using the `BABYLON.Scene` parameter passed
+to the rendering function creation callback which should capture the `BABYLON.Scene` parameter!
+
+##Cavaets:
+
+ a.) It was necessary to have the explicit initialization function BabylonjsCanvasComponent.createAnimation()
+because the embedded BabylonjsCanvasComponent is created before your encapsulating component is created causing
+chicken/egg issues.
+
+ b.) Only one canvas per page is currently supported: Experiments with multiple BabylonjsCanvasComponent embedded
+into one parent component's HTML caused issues with the binding of the WASD view manipulation keys .aka.
+they ceased working. This might be overcome by using the "BabylonJS Observables" but that was
+out of scope for my effort.
+
+---
+##Auto-Generated Docs:
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.19.
 
