@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'lib-alphapulsar-babylonjs-lib',
+  selector: 'alphapulsar-babylonjs-lib',
   template: `
     <p>
       alphapulsar-babylonjs-lib works!
