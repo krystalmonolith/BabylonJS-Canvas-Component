@@ -1,16 +1,14 @@
 # Angular BabylonJS Canvas Component: `BabylonjsCanvasComponent`
 
- 
-
 ## Introduction:
-The `BabylonjsCanvasComponent` .aka. `<babylonjs-canvas>` is an [Angular Component](https://angular.io/api/core/Component) 
+* The `BabylonjsCanvasComponent` .aka. `<babylonjs-canvas>` is an [Angular Component](https://angular.io/api/core/Component) 
 that wraps a HTML Canvas element that is bound to the browser's [WebGL](https://www.khronos.org/webgl/wiki/Main_Page) context. 
 The resultant browser WebGL context is managed through the [BabylonJS](https://www.babylonjs.com/) 3D graphics API.
 
-This component handles the infrastructure of creating and managing the `BABYLON.Engine` and `BABYLON.Scene`, 
+* This component handles the infrastructure of creating and managing the `BABYLON.Engine` and `BABYLON.Scene`, 
 BabylonJS's render loop, BabylonJS's key bindings, and BabylonJS's resizing events.    
 
-`BabylonjsCanvasComponent` was not designed to be used directly: 
+* `BabylonjsCanvasComponent` was not designed to be used directly: 
 It was designed to be encapsulated in another Angular component that provides a "render function". 
 The render function is the function passed to the `BABYLON.scene.registerBeforeRender(function() {})` 
 BabylonJS registration function.
