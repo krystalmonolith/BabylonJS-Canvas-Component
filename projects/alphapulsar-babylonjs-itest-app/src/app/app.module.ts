@@ -4,10 +4,12 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {AlphapulsarBabylonjsLibModule} from '../../../alphapulsar-babylonjs-lib/src/public-api';
+import {ExplodedCubeComponent} from './exploded-cube/exploded-cube.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ExplodedCubeComponent
   ],
   imports: [
     BrowserModule,

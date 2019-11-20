@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2019 by AlphaPulsar LLC.
- * All Rights Reserved.
- */
-
 import {Component, OnInit} from '@angular/core';
 import * as BABYLON from "babylonjs";
 

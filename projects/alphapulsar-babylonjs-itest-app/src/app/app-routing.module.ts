@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {AlphapulsarBabylonjsLibComponent} from '../../../alphapulsar-babylonjs-lib/src/lib/alphapulsar-babylonjs-lib.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {ExplodedCubeComponent} from './exploded-cube/exploded-cube.component';
 
 
 const routes: Routes = [
-  { path: '', component: AlphapulsarBabylonjsLibComponent }
+  { path: '', component: ExplodedCubeComponent }
 ];
 
 @NgModule({
