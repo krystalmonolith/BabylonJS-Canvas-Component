@@ -19,20 +19,48 @@
  *
  */
 
+/**
+ * Angular BabylonJS Canvas Component
+ *
+ * General Usage:
+ *
+ * The <babylonjs-canvas> was not designed to be used directly: It was designed to be encapsulated in another
+ * Angular component that provides a "render function". The render function is the function passed to the
+ * BABYLON.scene.registerBeforeRender(function() {}) BabylonJS registration function.
+ * @see <a href="https://doc.babylonjs.com/babylon101/animations#complex-animation">Complex animation</a>
+ *
+ * 1.) Embed the <babylonjs-canvas> component selector in your component's template.
+ *
+ * 2.) Use ViewChild to get a reference to the canvas component element and type it as BabylonjsCanvasComponent.
+ * !!! IMPORTANT: Use { static: true } as the ViewChild second parameter. !!! .e.g:
+ *   @ViewChild('explodedcubecanvas', {static: true}) private bjsCanvasComponent: BabylonjsCanvasComponent;
+ *
+ * 3.) In the NgInit() function of your component create the WebGL context by using the
+ * BabylonjsCanvasComponent.createAnimation() function. The createAnimation() function first initializes
+ * the BABYLON.Engine and BABYLON.Scene and then invokes a callback function you supply that returns
+ * the actual BabylonJS render function having the TypeScript signature: () => void.
+ * After your function return the render function it is registered with BabylonJS render loop.
+ * Default camera, light, and axis functions are supplied of none are specified
+ * when calling BabylonjsCanvasComponent.createAnimation().
+ *
+ * 4.) Create frame-by-frame animations inside your render function using the BABYLON.Scene parameter passed
+ * to the rendering function creation callback which should capture the BABYLON.Scene parameter!
+ *
+ * Cavaets:
+ *
+ * 1.) It was necessary to have the explicit initialization function BabylonjsCanvasComponent.createAnimation()
+ * because the embedded BabylonjsCanvasComponent is created before your encapsulating component is created causing
+ * chicken/egg issues.
+ *
+ * 2.) Only one canvas per page is currently supported: Experiments with multiple BabylonjsCanvasComponent embedded
+ * into one parent component's HTML caused issues with the binding of the WASD view manipulation keys .aka.
+ * they ceased working. This might be overcome by using the "BabylonJS Observables" but that was
+ * out of scope for my effort.
+ */
+
+
 import {Component, OnInit} from '@angular/core';
 import * as BABYLON from "babylonjs";
-
-//=============================================================================
-
-const DEFAULT_CAMERA_SPEED: number = 5;
-const DEFAULT_CAMERA_ROLL_CORRECTION: number = 10;
-const DEFAULT_CAMERA_OFFSET: number = 250;
-
-const DEFAULT_LIGHT_INTENSITY: number = 0.75;
-
-const AXIS_LINE_SIZE: number = 1e6;
-
-const CANVAS_ID: string = "renderCanvas";
 
 //=============================================================================
 
@@ -41,7 +69,7 @@ const CANVAS_ID: string = "renderCanvas";
   templateUrl: './babylonjs-canvas.component.html',
   styleUrls: ['./babylonjs-canvas.component.scss']
 })
-export class BabylonjsCanvasComponent implements OnInit {
+export class BabylonjsCanvasComponent {
 
   private _canvas: HTMLCanvasElement;
   private _engine: BABYLON.Engine;
@@ -56,18 +84,7 @@ export class BabylonjsCanvasComponent implements OnInit {
 
 //=============================================================================
 
-  ngOnInit() {
-  }
-
-//=============================================================================
-
-  setRenderer(renderer: () => void): void {
-    this._scene.registerBeforeRender(renderer);
-  }
-
-//=============================================================================
-
-  createAnimation(sceneFunc: (bjsCanvasComponent: BabylonjsCanvasComponent, scene: BABYLON.Scene) => void,
+  createAnimation(sceneFunc: (bjsCanvasComponent: BabylonjsCanvasComponent, scene: BABYLON.Scene) => () => void,
                   cameraFunc: (canvas: HTMLCanvasElement, scene: BABYLON.Scene) => BABYLON.Camera = BabylonjsCanvasComponent.defaultFlyCamera,
                   lightFunc: (scene: BABYLON.Scene) => BABYLON.Light = BabylonjsCanvasComponent.defaultHemisphericalLight,
                   axisFunc: (scene: BABYLON.Scene) => void = BabylonjsCanvasComponent.defaultAxis
@@ -76,7 +93,7 @@ export class BabylonjsCanvasComponent implements OnInit {
     // Get a ref to the <canvas> element.
     this._canvas = <HTMLCanvasElement>document.getElementById(CANVAS_ID);
     if (!this._canvas) {
-      throw new Error(`AlphapulsarBabylonjsLibComponent cannot locate HTML canvas with id \"${CANVAS_ID}\".`);
+      throw new Error(`BabylonjsCanvasComponent cannot locate HTML canvas with id \"${CANVAS_ID}\".`);
     }
 
     // Engine and scene creation are axiomatic to this component.
@@ -98,7 +115,7 @@ export class BabylonjsCanvasComponent implements OnInit {
       axisFunc(this._scene);
     }
 
-    const thisCanvasComponent: BabylonjsCanvasComponent = this; // Capture target for AlphapulsarBabylonjsLibComponent.this
+    const thisCanvasComponent: BabylonjsCanvasComponent = this; // Capture target for BabylonjsCanvasComponent.this
 
     this._scene.executeWhenReady(function () {
       thisCanvasComponent._engine.hideLoadingUI();
@@ -117,7 +134,9 @@ export class BabylonjsCanvasComponent implements OnInit {
       thisCanvasComponent._engine.switchFullscreen(true);
     });
 
-    sceneFunc(this, this._scene);
+    // Invoke the user supplied function that should create and return a
+    // render function using the supplied BABYLON.Scene parameter.
+    this._scene.registerBeforeRender(sceneFunc(this, this._scene));
   }
 
 //=============================================================================
@@ -213,7 +232,20 @@ export class BabylonjsCanvasComponent implements OnInit {
   }
 
   /**
-   * Counter for AlphapulsarBabylonjsLibComponent#bjsId
+   * Counter for BabylonjsCanvasComponent#bjsId
    */
   private static _bjsId = 0;
 }
+
+//=============================================================================
+
+const DEFAULT_CAMERA_SPEED: number = 5;
+const DEFAULT_CAMERA_ROLL_CORRECTION: number = 10;
+const DEFAULT_CAMERA_OFFSET: number = 250;
+
+const DEFAULT_LIGHT_INTENSITY: number = 0.75;
+
+const AXIS_LINE_SIZE: number = 1e6;
+
+const CANVAS_ID: string = "renderCanvas";
+

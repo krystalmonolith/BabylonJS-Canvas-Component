@@ -34,16 +34,17 @@ export class ExplodedCubeRenderer {
   constructor() {
   }
 
-  createExplodedCubeRenderer(AlphapulsarBabylonjsLibComponent: BabylonjsCanvasComponent, scene: BABYLON.Scene): void {
+  createExplodedCubeRenderer(canvasComponent: BabylonjsCanvasComponent, scene: BABYLON.Scene): () => void {
     this.boxes = new Boxes(scene);
     this.frameController = new FrameController();
     this.renderState = RenderState.RENDER_CUBE_EXPAND_COLLAPSE;
-    AlphapulsarBabylonjsLibComponent.setRenderer(this.renderExplodingCube(this.renderState, this.frameController));
+    return this.renderExplodingCube(this.renderState, this.frameController);
   }
 
-  private renderExplodingCube(renderState: RenderState, fc: FrameController) {
+  private renderExplodingCube(renderState: RenderState, fc: FrameController): () => void {
     // The rendering function returned here is eventually passed to BABYLON.Scene.registerBeforeRender()
-    // and gets repeatedly executed by a BABYLON.Engine.runRenderLoop() squirrel cage.
+    // and gets repeatedly executed by a BABYLON.Engine.runRenderLoop() squirrel cage that is implemented
+    // internally in the BabylonjsCanvasComponent.
     return () => {
       switch (renderState) {
         case RenderState.RENDER_CUBE_EXPAND_COLLAPSE:

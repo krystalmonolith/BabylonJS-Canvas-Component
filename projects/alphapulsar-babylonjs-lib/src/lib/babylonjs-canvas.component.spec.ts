@@ -23,7 +23,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BabylonjsCanvasComponent } from './babylonjs-canvas.component';
 
-describe('AlphapulsarBabylonjsLibComponent', () => {
+describe('BabylonjsCanvasComponent', () => {
   let component: BabylonjsCanvasComponent;
   let fixture: ComponentFixture<BabylonjsCanvasComponent>;
 
