@@ -1,3 +1,24 @@
+/*
+ * MIT License
+ *
+ * Copyright 2019 AlphaPulsar LLC
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+ * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ *
+ */
+
 import {Component, OnInit} from '@angular/core';
 import * as BABYLON from "babylonjs";
 
@@ -16,11 +37,11 @@ const CANVAS_ID: string = "renderCanvas";
 //=============================================================================
 
 @Component({
-  selector: 'alphapulsar-babylonjs-lib',
-  templateUrl: './alphapulsar-babylonjs-lib.component.html',
-  styleUrls: ['./alphapulsar-babylonjs-lib.component.scss']
+  selector: 'babylonjs-canvas',
+  templateUrl: './babylonjs-canvas.component.html',
+  styleUrls: ['./babylonjs-canvas.component.scss']
 })
-export class AlphapulsarBabylonjsLibComponent implements OnInit {
+export class BabylonjsCanvasComponent implements OnInit {
 
   private _canvas: HTMLCanvasElement;
   private _engine: BABYLON.Engine;
@@ -46,10 +67,10 @@ export class AlphapulsarBabylonjsLibComponent implements OnInit {
 
 //=============================================================================
 
-  createAnimation(sceneFunc: (bjsCanvasComponent: AlphapulsarBabylonjsLibComponent, scene: BABYLON.Scene) => void,
-                  cameraFunc: (canvas: HTMLCanvasElement, scene: BABYLON.Scene) => BABYLON.Camera = AlphapulsarBabylonjsLibComponent.defaultFlyCamera,
-                  lightFunc: (scene: BABYLON.Scene) => BABYLON.Light = AlphapulsarBabylonjsLibComponent.defaultHemisphericalLight,
-                  axisFunc: (scene: BABYLON.Scene) => void = AlphapulsarBabylonjsLibComponent.defaultAxis
+  createAnimation(sceneFunc: (bjsCanvasComponent: BabylonjsCanvasComponent, scene: BABYLON.Scene) => void,
+                  cameraFunc: (canvas: HTMLCanvasElement, scene: BABYLON.Scene) => BABYLON.Camera = BabylonjsCanvasComponent.defaultFlyCamera,
+                  lightFunc: (scene: BABYLON.Scene) => BABYLON.Light = BabylonjsCanvasComponent.defaultHemisphericalLight,
+                  axisFunc: (scene: BABYLON.Scene) => void = BabylonjsCanvasComponent.defaultAxis
   ): void {
 
     // Get a ref to the <canvas> element.
@@ -77,7 +98,7 @@ export class AlphapulsarBabylonjsLibComponent implements OnInit {
       axisFunc(this._scene);
     }
 
-    const thisCanvasComponent: AlphapulsarBabylonjsLibComponent = this; // Capture target for AlphapulsarBabylonjsLibComponent.this
+    const thisCanvasComponent: BabylonjsCanvasComponent = this; // Capture target for AlphapulsarBabylonjsLibComponent.this
 
     this._scene.executeWhenReady(function () {
       thisCanvasComponent._engine.hideLoadingUI();
@@ -104,7 +125,7 @@ export class AlphapulsarBabylonjsLibComponent implements OnInit {
   static defaultFlyCamera(canvas: HTMLCanvasElement, scene: BABYLON.Scene, offset: number = DEFAULT_CAMERA_OFFSET) {
     const flyCamera: BABYLON.FlyCamera =
       new BABYLON.FlyCamera(
-        AlphapulsarBabylonjsLibComponent.bjsId("_camera"),
+        BabylonjsCanvasComponent.bjsId("_camera"),
         new BABYLON.Vector3(offset, offset, -offset),
         scene);
 
@@ -188,7 +209,7 @@ export class AlphapulsarBabylonjsLibComponent implements OnInit {
    * @param idBase The string to which a unique number is appended.
    */
   static bjsId(idBase: string): string {
-    return `${idBase}${++AlphapulsarBabylonjsLibComponent._bjsId}`;
+    return `${idBase}${++BabylonjsCanvasComponent._bjsId}`;
   }
 
   /**
