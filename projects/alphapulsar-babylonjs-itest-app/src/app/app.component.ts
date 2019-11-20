@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'alphapulsar-babylonjs-itest-app';
+  title = 'AlphaPulsar BabylonJS Integration Test';
 }
