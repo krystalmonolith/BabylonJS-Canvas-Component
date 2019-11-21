@@ -28,7 +28,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'AlphaPulsar BabylonJS Integration Test';
-  version = '1.0.3'
+  version = '1.0.4';
   author = 'mdeazley@gmail.com';
   description = 'This application is the integration test for the babylonjs-canvas component.';
 }
