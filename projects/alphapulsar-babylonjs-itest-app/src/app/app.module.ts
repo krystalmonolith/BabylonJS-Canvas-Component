@@ -26,11 +26,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {AlphapulsarBabylonjsLibModule} from '../../../alphapulsar-babylonjs-lib/src/public-api';
 import {ExplodedCubeComponent} from './exploded-cube/exploded-cube.component';
+import {HelloSphereComponent} from './hello-sphere/hello-sphere.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ExplodedCubeComponent
+    HelloSphereComponent,
+    ExplodedCubeComponent,
   ],
   imports: [
     BrowserModule,

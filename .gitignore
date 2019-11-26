@@ -44,3 +44,8 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Local scripts
+b.sh
+b[1-9].sh
+

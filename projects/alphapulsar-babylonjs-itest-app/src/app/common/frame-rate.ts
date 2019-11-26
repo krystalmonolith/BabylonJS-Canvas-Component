@@ -25,7 +25,7 @@ export class FrameRate {
   private _frameIndex: number;
   private _lastT: number;
   private _frameDTs: Array<number>;
-  private _framesPerSecond: number = 30;   // The update rate in updates per second.
+  private _framesPerSecond = 30;   // The update rate in updates per second.
 
   constructor() {
     this._totalFrames = 0;
@@ -50,12 +50,12 @@ export class FrameRate {
     const t: number = Date.now();
     let dT = t - this._lastT; // Milliseconds since last calculation.
     this._lastT = t;
-    if (dT == 0) {
+    if (dT === 0) {
       dT = 1;
     }
     this._frameDTs.shift();
     this._frameDTs.push(dT);
-    let tdT = this._frameDTs.reduce((acc, cv) => acc + cv);
+    const tdT = this._frameDTs.reduce((acc, cv) => acc + cv);
     this._framesPerSecond = 1000 / tdT * this._frameDTs.length;
     if (this._totalFrames % FrameRate.FRAMERATE_DTS === 0) {
       console.log(`F:${this.toString()}`);

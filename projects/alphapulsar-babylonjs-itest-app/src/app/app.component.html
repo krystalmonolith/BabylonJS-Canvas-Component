@@ -19,6 +19,18 @@
   ~
   -->
 
-<div><span style="font-size: 36px; font-weight: bold; ">{{title}}</span>&nbsp;&nbsp;<small>{{version}}</small><small style="float: right;">{{author}}</small></div>
-<div><span style="font-style: italic;">{{description}}</span></div>
+<div>
+  <span class="title-main">{{title}}</span>&nbsp;&nbsp;
+  <small>v{{version}}</small>
+  <small class="title-author">{{author}}</small>
+</div>
+<div>
+  <span class="title-description">{{description}}</span>
+</div>
 <router-outlet></router-outlet>
+<a href="https://github.com/krystalmonolith/BabylonJS-Canvas-Component">
+  <div class="footer-box">
+    <span class="footer-box-text">{{title}} on</span>
+    <img class="footer-box-image" src="assets/GitHub_Logo.png">
+  </div>
+</a>

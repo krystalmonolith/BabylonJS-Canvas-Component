@@ -19,16 +19,17 @@
  *
  */
 
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ExplodedCubeRenderer} from './exploded-cube-renderer';
 import {BabylonjsCanvasComponent} from '../../../../alphapulsar-babylonjs-lib/src/public-api';
+import {Box} from './box';
 
 @Component({
-  selector: 'bjs-exploded-cube',
+  selector: 'app-exploded-cube',
   templateUrl: './exploded-cube.component.html',
   styleUrls: ['./exploded-cube.component.scss']
 })
-export class ExplodedCubeComponent implements OnInit {
+export class ExplodedCubeComponent implements OnInit, OnDestroy {
   @ViewChild('explodedcubecanvas', {static: true}) private bjsCanvasComponent: BabylonjsCanvasComponent;
 
   constructor() {
@@ -37,5 +38,9 @@ export class ExplodedCubeComponent implements OnInit {
   ngOnInit() {
     const explodedCubeRenderer: ExplodedCubeRenderer = new ExplodedCubeRenderer();
     this.bjsCanvasComponent.createAnimation(explodedCubeRenderer.createExplodedCubeRenderer.bind(explodedCubeRenderer));
+  }
+
+  ngOnDestroy(): void {
+    Box.disposeStaticMaterials();
   }
 }
