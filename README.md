@@ -1,7 +1,14 @@
 # Angular BabylonJS Canvas Component: `BabylonjsCanvasComponent`
 
+### LIVE DEMO: https://alphapulsar.com/angular/alphapulsar-babylonjs-component
+* W/A/S/D keys to navigate camera forward/left/back/right.
+* Q/E keys for camera up/down.
+* Left-click-drag to pitch/yaw camera.
+* Right-click-drag to roll camera. 
+* Double-Click canvas to toggle full screen.
+
 ## Introduction:
-* The `BabylonjsCanvasComponent` .aka. `<babylonjs-canvas>` is an [Angular Component](https://angular.io/api/core/Component) 
+* The `BabylonjsCanvasComponent` .aka. `<lib-babylonjs-canvas>` is an [Angular Component](https://angular.io/api/core/Component) 
 that wraps a HTML Canvas element that is bound to the browser's [WebGL](https://www.khronos.org/webgl/wiki/Main_Page) context. 
 The resultant browser WebGL context is managed through the [BabylonJS](https://www.babylonjs.com/) 3D graphics API.
 
@@ -22,7 +29,7 @@ These are _not_ the animations being discussed here.
 ---
 ## BabylonjsCanvasComponent General Usage: 
 
-1.) Embed the `<babylonjs-canvas>` component selector in _your_ component's template HTML.
+1.) Embed the `<lib-babylonjs-canvas>` component selector in _your_ component's template HTML.
 
 2.) Use Angular's `ViewChild` to get a reference to the canvas component element and type it as `BabylonjsCanvasComponent`.
 
@@ -30,7 +37,7 @@ These are _not_ the animations being discussed here.
 
 ```@ViewChild('explodedcubecanvas', {static: true}) private bjsCanvasComponent: BabylonjsCanvasComponent;```
 
-3.) In the `NgInit()` function of your component create the WebGL context by using the
+3.) In the `ngInit()` function of your component create the WebGL context by using the
 `BabylonjsCanvasComponent.createAnimation()` function. The `createAnimation()` function first initializes
 the `BABYLON.Engine` and `BABYLON.Scene` and then invokes a callback function _you_ supply that returns
 the actual BabylonJS render function having  aTypeScript signature: `() => void`.
@@ -42,6 +49,9 @@ are supplied if none are specified.
 
 4.) Create frame-by-frame animations inside your render function using the `BABYLON.Scene` parameter passed
 to the rendering function creation callback which should capture the `BABYLON.Scene` parameter!
+
+5.) Optional: Implement `OnDestroy` to dispose of BabylonJS resources. This was necessary in the
+integration test application because of static references to BABYLON.StandardMaterial... _YMMV_.   
 
 ## Cavaets:
 
@@ -57,7 +67,7 @@ out of scope for my effort.
 ---
 ## Angular Component Selector for `BabylonjsCanvasComponent`:
 
-`<babylonjs-canvas>`
+`<lib-babylonjs-canvas>`
 
 ---
 ## API:

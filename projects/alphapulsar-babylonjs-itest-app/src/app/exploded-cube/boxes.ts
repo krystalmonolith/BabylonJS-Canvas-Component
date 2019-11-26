@@ -19,7 +19,7 @@
  *
  */
 
-import * as BABYLON from "babylonjs";
+import * as BABYLON from 'babylonjs';
 import {Box} from './box';
 import {BOX_SIZE, BOXES_PER_SIDE} from './constant';
 
@@ -27,7 +27,7 @@ export class Boxes {
   private _boxes: Array<Box>;
 
   constructor(scene: BABYLON.Scene) {
-    Box.initMaterials(scene);
+    Box.initStaticMaterials(scene);
     this._boxes = [];
     const bS: number = (BOXES_PER_SIDE * BOX_SIZE) / 2;
     const box2 = BOX_SIZE / 2.0;

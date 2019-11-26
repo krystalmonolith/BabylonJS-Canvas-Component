@@ -19,7 +19,7 @@
  *
  */
 
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +28,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'AlphaPulsar BabylonJS Integration Test';
-  version = '1.0.4';
+  version = '2.0.0';
   author = 'mdeazley@gmail.com';
-  description = 'This application is the integration test for the babylonjs-canvas component.';
+  description = 'This application is the integration test for the <lib-babylonjs-canvas> component.';
 }

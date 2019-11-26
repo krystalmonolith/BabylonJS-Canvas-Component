@@ -24,7 +24,7 @@
             "tsConfig": "projects/alphapulsar-babylonjs-itest-app/tsconfig.app.json",
             "aot": false,
             "assets": [
-              "projects/alphapulsar-babylonjs-itest-app/src/favicon.ico",
+              "projects/alphapulsar-babylonjs-itest-app/src/favicon.png",
               "projects/alphapulsar-babylonjs-itest-app/src/assets"
             ],
             "styles": [

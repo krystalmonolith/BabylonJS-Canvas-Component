@@ -19,7 +19,7 @@
  *
  */
 
-import * as BABYLON from "babylonjs";
+import * as BABYLON from 'babylonjs';
 
 export function minMax(v: number, min: number, max: number): number {
   return Math.max(Math.min(v, max), min);

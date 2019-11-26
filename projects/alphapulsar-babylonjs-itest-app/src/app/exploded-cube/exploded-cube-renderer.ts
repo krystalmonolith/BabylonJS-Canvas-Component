@@ -19,7 +19,7 @@
  *
  */
 
-import * as BABYLON from "babylonjs";
+import * as BABYLON from 'babylonjs';
 import {BabylonjsCanvasComponent} from '../../../../alphapulsar-babylonjs-lib/src/public-api.js';
 import {Boxes} from './boxes';
 import {FrameController} from './frame-controller';
@@ -102,6 +102,6 @@ export class ExplodedCubeRenderer {
           break;
       }
       fc.calculateFrameRate();
-    }
+    };
   }
 }

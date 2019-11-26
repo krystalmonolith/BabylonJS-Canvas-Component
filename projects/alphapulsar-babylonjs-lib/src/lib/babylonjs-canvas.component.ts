@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright ${year} AlphaPulsar LLC
+ * Copyright 2019 AlphaPulsar LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
  * documentation files (the "Software"), to deal in the Software without restriction, including without limitation
@@ -24,17 +24,18 @@
  * @see <a href="https://github.com/krystalmonolith/BabylonJS-Canvas-Component">Online Documentation</a>
  */
 
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import * as BABYLON from 'babylonjs';
 
 // =============================================================================
+// =============================================================================
 
 @Component({
-  selector: 'babylonjs-canvas',
+  selector: 'lib-babylonjs-canvas',
   templateUrl: './babylonjs-canvas.component.html',
   styleUrls: ['./babylonjs-canvas.component.scss']
 })
-export class BabylonjsCanvasComponent {
+export class BabylonjsCanvasComponent implements OnDestroy {
   private static _bjsId = 0;
 
   private _canvas: HTMLCanvasElement;
@@ -115,7 +116,29 @@ export class BabylonjsCanvasComponent {
 
   // =============================================================================
 
-  constructor() {}
+  constructor() {
+  }
+
+  // =============================================================================
+
+  ngOnDestroy(): void {
+    if (this._camera) {
+      this._camera.dispose();
+      this._camera = null;
+    }
+    if (this._light) {
+      this._light.dispose();
+      this._light = null;
+    }
+    if (this._scene) {
+      this._scene.dispose();
+      this._scene = null;
+    }
+    if (this._engine) {
+      this._engine.dispose();
+      this._engine = null;
+    }
+  }
 
   // =============================================================================
 
@@ -126,7 +149,7 @@ export class BabylonjsCanvasComponent {
     axisFunc: (scene: BABYLON.Scene) => void = BabylonjsCanvasComponent.defaultAxis
   ): void {
     // Get a ref to the <canvas> element.
-    this._canvas = <HTMLCanvasElement>document.getElementById(CANVAS_ID);
+    this._canvas = document.getElementById(CANVAS_ID) as HTMLCanvasElement;
     if (!this._canvas) {
       throw new Error(`BabylonjsCanvasComponent cannot locate HTML canvas with id "${CANVAS_ID}".`);
     }
@@ -140,6 +163,9 @@ export class BabylonjsCanvasComponent {
     // Camera creation can optionally be overridden.
     if (cameraFunc) {
       this._camera = cameraFunc(this._canvas, this._scene);
+      // if (this._camera) {
+      //   this._scene.switchActiveCamera(this._camera, true);
+      // }
     }
 
     if (lightFunc) {
@@ -152,21 +178,27 @@ export class BabylonjsCanvasComponent {
 
     const thisCanvasComponent: BabylonjsCanvasComponent = this; // Capture target for BabylonjsCanvasComponent.this
 
-    this._scene.executeWhenReady(function() {
+    this._scene.executeWhenReady(() => {
       thisCanvasComponent._engine.hideLoadingUI();
     });
 
-    this._engine.runRenderLoop(function() {
-      thisCanvasComponent._scene.render();
+    this._engine.runRenderLoop(() => {
+      if (thisCanvasComponent && thisCanvasComponent._scene) {
+        thisCanvasComponent._scene.render();
+      }
     });
 
     // Resize
-    window.addEventListener('resize', function() {
-      thisCanvasComponent._engine.resize();
+    window.addEventListener('resize', () => {
+      if (thisCanvasComponent && thisCanvasComponent._engine) {
+        thisCanvasComponent._engine.resize();
+      }
     });
 
-    this._canvas.addEventListener('dblclick', function() {
-      thisCanvasComponent._engine.switchFullscreen(true);
+    this._canvas.addEventListener('dblclick', () => {
+      if (thisCanvasComponent && thisCanvasComponent._engine) {
+        thisCanvasComponent._engine.switchFullscreen(true);
+      }
     });
 
     // Invoke the user supplied function that should create and return a
@@ -212,7 +244,6 @@ export class BabylonjsCanvasComponent {
   }
 }
 
-// =============================================================================
 
 const DEFAULT_CAMERA_SPEED = 5;
 const DEFAULT_CAMERA_ROLL_CORRECTION = 10;
